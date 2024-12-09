@@ -27,11 +27,11 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:55',
             'email' => 'required|email|unique:users,email,'.$this->id,
+            'role' => 'required|in:admin,subadmin,conductor', // Add role validation
             'password' => [
                 'confirmed',
-                Password::min(8)
-                    ->letters()
-                    ->symbols(),
+                Password::min(6)
+                    ->letters(),
             ]
         ];
     }

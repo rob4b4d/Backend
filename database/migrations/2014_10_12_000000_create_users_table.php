@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
+        // Creating the users table
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->id(); // Primary key
+            $table->string('name'); // User's name
+            $table->string('email')->unique(); // User's unique email
+            $table->string('password'); // Encrypted password
+            $table->string('role', 10); // User's role (e.g., admin, user)
+            $table->timestamps(); // Timestamps for created_at and updated_at
         });
     }
 
@@ -31,6 +31,7 @@ return new class extends Migration
      */
     public function down()
     {
+        // Dropping the users table during rollback
         Schema::dropIfExists('users');
     }
 };

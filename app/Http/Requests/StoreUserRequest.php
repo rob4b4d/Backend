@@ -27,11 +27,11 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:55',
             'email' => 'required|email|unique:users,email',
+            'role' => 'required|in:admin,subadmin,conductor', // Add role validation
             'password' => [
                 'required',
                 Password::min(8)
-                    ->letters()
-                    ->symbols(),
+                    ->letters(),
             ]
         ];
     }

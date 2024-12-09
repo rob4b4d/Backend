@@ -28,12 +28,12 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
+        $data = $request->validated(); // No need to hash here
         $user = User::create($data);
-
-        return response(new UserResource($user) , 201);
+    
+        return response(new UserResource($user), 201);
     }
+    
 
     /**
      * Display the specified resource.
@@ -56,13 +56,11 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
-        $user->update($data);
-
+        $user->update($data); // Password will be automatically hashed if it's in the request
+    
         return new UserResource($user);
     }
+    
 
     /**
      * Remove the specified resource from storage.

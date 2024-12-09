@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Models\User;    
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,10 +18,12 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),    
+            'password' => $data['password'], // Assuming password hashing is handled in the model
         ]);
 
-        $token = $user->createToken('main')->plainTextToken;
+        // Create a token with a dynamic name using the current timestamp
+        $token = $user->createToken(time())->plainTextToken;
+
         return response(compact('user', 'token'));
     }
 
@@ -37,15 +38,19 @@ class AuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        $token = $user->createToken('main')->plainTextToken;
+
+        // Create a token with a dynamic name using the current timestamp
+        $token = $user->createToken(time())->plainTextToken;
+
         return response(compact('user', 'token'));
     }
 
     public function logout(Request $request)
     {
-            /** @var \App\Models\User $user */
-            $user = $request->user();
-            $user->currentAccessToken()->delete();
-            return response('', 204);
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
+
+        return response('', 204);
     }
 }

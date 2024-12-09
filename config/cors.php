@@ -20,8 +20,8 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [      
-    'http://localhost:3000',
-    'http://localhost:3001', // Whitelist this origin
+    'http://localhost:3001',//admin
+    'http://localhost:8081',//conductor
 ],
 
     'allowed_origins_patterns' => [],
