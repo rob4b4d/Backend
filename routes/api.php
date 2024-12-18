@@ -5,7 +5,9 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FareController;
 use App\Http\Controllers\Api\FareLocationController;
 use App\Http\Controllers\Api\FareCollectionController;
+use App\Http\Controllers\Api\FareCollectionControllerV2;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\HistoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,11 +34,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Fare-related routes
     Route::apiResource('/fares', FareController::class);
-    Route::apiResource('/fare-locations', FareLocationController::class);
+    Route::apiResource('/fare-locations', FareLocationController::class);   
     Route::apiResource('/fare-collections', FareCollectionController::class);
+    Route::apiResource('/fare-collectionsv2', FareCollectionControllerV2::class);
 
     // Report routes
     Route::apiResource('/reports', ReportController::class);
+    Route::apiResource('/history', HistoryController::class);
 });
 
 // Public routes

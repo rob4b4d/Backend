@@ -21,6 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'bus_num',
     ];
 
     /**
@@ -58,5 +59,10 @@ class User extends Authenticatable
     public function fareCollections()
     {
         return $this->hasMany(FareCollection::class);
+    }
+
+    public function history()
+    {
+        return $this->hasMany(History::class);
     }
 }

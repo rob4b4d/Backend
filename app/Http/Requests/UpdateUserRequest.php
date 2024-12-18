@@ -28,6 +28,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|string|max:55',
             'email' => 'required|email|unique:users,email,'.$this->id,
             'role' => 'required|in:admin,subadmin,conductor', // Add role validation
+            'bus_num' => 'nullable|numeric', // Validation for bus_num
             'password' => [
                 'confirmed',
                 Password::min(6)

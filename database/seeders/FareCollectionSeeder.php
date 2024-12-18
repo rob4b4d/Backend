@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\FareCollection;
-use App\Models\User; // Ensure you import the User model
+use App\Models\User;
 
 class FareCollectionSeeder extends Seeder
 {
@@ -15,27 +15,32 @@ class FareCollectionSeeder extends Seeder
      */
     public function run()
     {
-        // Ensure you have corresponding `fares` data for `fare_id`
-        // Make sure you have existing users in the users table, or create a new one for testing
-        
-        $user = User::first(); // Get the first user or use a specific user ID
+        // Ensure there are existing users in the users table
+        $user = User::first(); // Retrieve the first user
+        if (!$user) {
+            $this->command->error('No users found in the database. Please create a user first.');
+            return;
+        }
 
+        // Seed fare collections
         FareCollection::create([
             'route' => 1,
-            'regular_total' => '500',
-            'discounted_total' => '200',
-            'pick_up_total' => '50',
-            'fare_id' => 3, // Ensure fare with ID 1 exists
-            'user_id' => $user->id, // Associate with the first user
+            'regular_total' => 500.00,
+            'discounted_total' => 200.00,
+            'fare_id' => 1, // Ensure fare with this ID exists
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'bus_num' => 4321,
         ]);
 
         FareCollection::create([
             'route' => 2,
-            'regular_total' => '600',
-            'discounted_total' => '250',
-            'pick_up_total' => '70',
-            'fare_id' => 4, // Ensure fare with ID 2 exists
-            'user_id' => $user->id, // Associate with the first user
+            'regular_total' => 600.00,
+            'discounted_total' => 250.00,
+            'fare_id' => 2, // Ensure fare with this ID exists
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'bus_num' => 5432,
         ]);
     }
 }

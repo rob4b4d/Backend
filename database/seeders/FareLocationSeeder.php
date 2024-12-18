@@ -19,7 +19,7 @@ class FareLocationSeeder extends Seeder
         ]);
 
         FareLocation::create([
-            'fare_location' => 'San Manuel',
+            'fare_location' => 'Sta Maria - San Manuel',
             'regular_price' => 60,
             'discounted_price' => 40,
             'fare_id' => 2,  // Referencing the second Fare ID

@@ -13,19 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fare_collections', function (Blueprint $table) {
-            $table->id();
-            $table->integer('route')->length(5); // Limiting route to 5 digits
-            $table->string('name');
-            $table->decimal('regular_total', 10, 2);
-            $table->decimal('discounted_total', 10, 2);
-            $table->integer('bus_num');
+        Schema::create('history', function (Blueprint $table) {
+            $table->id(); // Primary key with auto-increment
             $table->timestamp('date')->default(DB::raw('CURRENT_TIMESTAMP')); // Default to current timestamp
-            $table->unsignedBigInteger('fare_id'); // Foreign key to fare table
+            $table->unsignedBigInteger('fcollection_id'); // Foreign key to fare_collections table
             $table->unsignedBigInteger('user_id'); // Foreign key to users table
-            $table->foreign('fare_id')->references('id')->on('fares')->onDelete('cascade'); // Fare foreign key
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // User foreign key
-            $table->timestamps(); // Creates created_at and updated_at columns
+            $table->foreign('fcollection_id')->references('id')->on('fare_collections')->onDelete('cascade'); // Foreign key constraint
+            $table->timestamps(); // Adds created_at and updated_at columns
         });
     }
 
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fare_collections');
+        Schema::dropIfExists('history');
     }
 };

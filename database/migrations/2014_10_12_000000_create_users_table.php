@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique(); // User's unique email
             $table->string('password'); // Encrypted password
             $table->string('role', 10); // User's role (e.g., admin, user)
+            $table->integer('bus_num')->nullable();
             $table->timestamps(); // Timestamps for created_at and updated_at
         });
     }

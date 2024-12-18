@@ -11,25 +11,41 @@ class FareCollection extends Model
 
     protected $table = 'fare_collections';
 
-    // Update the $fillable property to include 'user_id'
     protected $fillable = [
-        'route',
+        'name',
         'regular_total',
         'discounted_total',
-        'pick_up_total',
         'fare_id',
-        'user_id', // Added user_id to the fillable array
+        'user_id',
+        'bus_num',
+        'route',
     ];
 
-    // Define the relationship with the Fare model
+    // Define relationship with the Fare model
     public function fare()
     {
-         return $this->belongsTo(Fare::class);
+        return $this->belongsTo(Fare::class);
     }
 
-    // Define the relationship with the User model
+    // Define relationship with the User model
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-}
+    // In FareCollection.php
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function history()
+    {
+        return $this->hasMany(History::class);
+    }
+
+    public function fareLocation()
+    {
+        return $this->hasMany(FareLocation::class);
+    }
+
+    }

@@ -16,4 +16,5 @@ class FareLocation extends Model
     {
         return $this->belongsTo(Fare::class);
     }
+
 }

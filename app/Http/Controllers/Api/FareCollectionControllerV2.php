@@ -5,20 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\FareCollection;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
-class FareCollectionController extends Controller
+class FareCollectionControllerV2 extends Controller
 {
-    // Display a listing of fare collections
-  // Display a listing of fare collections
-
 
   // Display a listing of fare collections
   public function index(Request $request)
   {
       // Get the user_id and date from the request query parameters
       $userId = $request->query('user_id');
-      $date = $request->query('date') ?: Carbon::today()->toDateString();  // Default to today's date if no date is provided
+      $date = $request->query('date');  // Default to today's date if no date is provided
   
       // Build the query to filter by user_id and date
       $query = FareCollection::with(['fare', 'user']);
@@ -28,8 +24,10 @@ class FareCollectionController extends Controller
           $query->where('user_id', $userId);
       }
   
-      // Apply the date filter
-      $query->whereDate('created_at', $date);
+      // Apply the date filter if provided
+      if ($date) {
+          $query->whereDate('created_at', $date);
+      }
   
       // Execute the query and get the results
       $fareCollections = $query->get();

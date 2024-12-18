@@ -12,9 +12,22 @@ class ReportController extends Controller
     public function index()
     {
         $reports = Report::with(['user', 'fare', 'fareCollection'])->get();
-        return response()->json($reports);
-    }
+    
+    $transformedReports = $reports->map(function ($report) {
+    return [
+        'date' => $report->created_at->format('Y-m-d'),
+        'bus_num' => $report->fareCollection ? $report->fareCollection->bus_num : 'N/A',
+        'username' => $report->user ? $report->user->name : 'Unknown',
+        'route' => $report->fareCollection ? $report->fareCollection->route : 'N/A',
+        'regular_total' => $report->fareCollection ? $report->fareCollection->regular_total : 0,
+        'discounted_total'=> $report->fareCollection ? $report->fareCollection->discounted_total : 0,
+    ];
+});
 
+    
+        return response()->json($transformedReports);
+    }
+    
     // Store a new report
     public function store(Request $request)
     {
